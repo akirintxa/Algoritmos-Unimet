@@ -1,32 +1,22 @@
-import requests
-import sky_show_functions as skyshow
-import sky_analyze_functions as skyanalyze
-import sky_search_functions as skysearch
-import check
+import skynow_show as skyshow
+import skynow_analysis as skyanalyze
+import skynow_search as skysearch
+import skynow_filter as skyfilter
+import start
+import local_data  # Cuando no hay internet
 
-# Carga los datos de la API consultada
-
-
-def load_api(url):
-    """Carga los datos de una API desde una URL específica y devuelve los datos en formato JSON.
-
-    Returns:
-        dict: Un diccionario que contiene los datos de la API en formato JSON.
-    """
-    # Se lee la API
-    response = requests.get(url)
-    # Se guarda la info de la API en una variable, si la lectura es exitosa (status_code = 200)
-    api_data = response.json()
-    return api_data
+countries = []
+states = []
+measurements = []
 
 # Muestra el menú principal y permite al usuario seleccionar una opción.
 
 
-def menu(data):
+def menu(countries, states, measurements):
     """Muestra un menú interactivo para consultar información de datos meteorológicos.
 
     Parameters:
-        data (list): Una lista de diccionarios que contiene los datos meteorológicos.
+        data (list): 
 
     Returns:
         None: Esta función no devuelve ningún valor, simplemente muestra el menú.
@@ -43,43 +33,24 @@ Seleccione una opción:
                        
 """)
         if option == "1":
-            skyshow.report_menu(data)
+            skyshow.report_menu(countries, states, measurements)
 
         elif option == "2":
-            skyanalyze.analyze_data_menu(data)
+            skyanalyze.analyze_data_menu(countries, states, measurements)
 
         elif option == "3":
-            skysearch.filter_data_menu(data)
+            skyfilter.filter_data_menu(countries, states, measurements)
 
         elif option == "4":
-            skysearch.search_data_menu(data)
+            skysearch.search_data_menu(countries, states, measurements)
 
         elif option == "0" or option.lower() == "salir":
-            print("\nGracias por utilizar esta app!\n")
+            print("\nGracias por utilizar SKYNOW!\n")
             break
         else:
             print("*** Por favor elija sólo una de las opciones disponibles.")
 
-# Inicia la app con bienvenida y llamando al menu
 
-
-def start():
-    """Punto de inicio del programa SKYNOW.
-
-    En cada iteración, muestra el título del programa y carga los datos meteorológicos
-    desde la API mediante la función 'load_api()'. 
-    Luego, invoca la función 'menu()'.
-
-
-    """
-    while True:
-        print("""
-*==* Bienvenido a SKYNOW *==*
-Análisis de datos metereológicos por Idoia Rivas
-              """)
-        weather_data = load_api()
-        menu(weather_data)
-        break
-
-
-start()
+countries, states, measurements = local_data.start()
+# countries, states, measurements = start.start()
+menu(countries, states, measurements)

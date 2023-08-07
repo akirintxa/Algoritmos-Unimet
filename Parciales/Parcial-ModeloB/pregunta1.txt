@@ -1,0 +1,8 @@
+1. c bien
+Hay una relación entre ambas clases, pero pueden existir de manera independiente
+2. A mal
+Una estrella puede tener 0 o mas planetas orbitando
+3. a bien
+4. a mal
+x Las nebulosas no pueden existir sin estrellas, pero las estrellas pueden existir sin las nebulosas
+Sin la clase nebulosa no esxiste la clase estrella
